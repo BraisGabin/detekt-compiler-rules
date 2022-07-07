@@ -23,7 +23,7 @@ class CompilerWarning(config: Config) : Rule(config) {
         if (bindingContext == BindingContext.EMPTY) return
 
         bindingContext.diagnostics
-            .filter { it.severity == WARNING }
+            .filterBySeverityAndFile(WARNING, file)
             .forEach { diagnostic ->
                 report(
                     CodeSmell(

@@ -23,7 +23,7 @@ class CompilerInfo(config: Config) : Rule(config) {
         if (bindingContext == BindingContext.EMPTY) return
 
         bindingContext.diagnostics
-            .filter { it.severity == INFO }
+            .filterBySeverityAndFile(INFO, file)
             .forEach { diagnostic ->
                 report(
                     CodeSmell(
