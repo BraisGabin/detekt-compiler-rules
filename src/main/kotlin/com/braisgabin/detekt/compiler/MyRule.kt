@@ -1,4 +1,4 @@
-package com.github.braisgabin.detektcompilerrules
+package com.braisgabin.detekt.compiler
 
 import io.gitlab.arturbosch.detekt.api.CodeSmell
 import io.gitlab.arturbosch.detekt.api.Config

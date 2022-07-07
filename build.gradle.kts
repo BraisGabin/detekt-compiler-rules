@@ -5,7 +5,7 @@ plugins {
     `maven-publish`
 }
 
-group = "com.github.braisgabin.detektcompilerrules"
+group = "com.braisgabin.detekt.compiler"
 version = "1.0-SNAPSHOT"
 
 repositories {
