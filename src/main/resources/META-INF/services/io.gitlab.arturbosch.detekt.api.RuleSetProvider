@@ -1,1 +1,1 @@
-com.braisgabin.detekt.compiler.MyRuleSetProvider
+com.braisgabin.detekt.compiler.CompilerRuleSetProvider
