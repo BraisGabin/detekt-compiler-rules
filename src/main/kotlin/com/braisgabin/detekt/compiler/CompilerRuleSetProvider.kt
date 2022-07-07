@@ -11,6 +11,7 @@ class CompilerRuleSetProvider : RuleSetProvider {
         return RuleSet(
             ruleSetId,
             listOf(
+                CompilerInfo(config),
                 CompilerWarning(config),
             ),
         )

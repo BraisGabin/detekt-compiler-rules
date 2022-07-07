@@ -1,3 +1,5 @@
 compiler:
+  CompilerInfo:
+    active: false
   CompilerWarning:
     active: true
