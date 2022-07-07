@@ -3,6 +3,7 @@ package com.braisgabin.detekt.compiler
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.rules.KotlinCoreEnvironmentTest
 import io.gitlab.arturbosch.detekt.test.compileAndLintWithContext
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.comparables.shouldBeEqualComparingTo
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment
@@ -22,6 +23,19 @@ internal class CompilerWarningTest(private val env: KotlinCoreEnvironment) {
         val findings = CompilerWarning(Config.empty).compileAndLintWithContext(env, code)
         findings shouldHaveSize 1
         findings[0].message shouldBeEqualComparingTo "Kotlin compiler warning: DEPRECATION"
+    }
+
+    @Test
+    fun `doesn't report the ignored diagnostics`() {
+        val code = """
+            @RequiresOptIn
+            annotation class DelicateApi
+
+            @OptIn(DelicateApi::class)
+            fun a() {}
+        """
+        val findings = CompilerWarning(Config.empty).compileAndLintWithContext(env, code)
+        findings.shouldBeEmpty()
     }
 
     @Test

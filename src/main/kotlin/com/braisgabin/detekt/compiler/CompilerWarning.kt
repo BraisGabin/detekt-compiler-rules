@@ -7,6 +7,7 @@ import io.gitlab.arturbosch.detekt.api.Entity
 import io.gitlab.arturbosch.detekt.api.Issue
 import io.gitlab.arturbosch.detekt.api.Rule
 import io.gitlab.arturbosch.detekt.api.Severity
+import io.gitlab.arturbosch.detekt.api.config
 import org.jetbrains.kotlin.diagnostics.Severity.WARNING
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.BindingContext
@@ -19,11 +20,13 @@ class CompilerWarning(config: Config) : Rule(config) {
         Debt.FIVE_MINS,
     )
 
+    private val ignoreDiagnostic: List<String> by config(listOf("OPT_IN_IS_NOT_ENABLED"))
+
     override fun visitKtFile(file: KtFile) {
         if (bindingContext == BindingContext.EMPTY) return
 
         bindingContext.diagnostics
-            .filterBySeverityAndFile(WARNING, file)
+            .filterBySeverityAndFile(WARNING, file, ignoreDiagnostic)
             .forEach { diagnostic ->
                 report(
                     CodeSmell(

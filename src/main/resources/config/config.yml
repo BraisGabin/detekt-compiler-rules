@@ -1,5 +1,8 @@
 compiler:
   CompilerInfo:
     active: false
+    ignoreDiagnostic: []
   CompilerWarning:
     active: true
+    ignoreDiagnostic:
+      - 'OPT_IN_IS_NOT_ENABLED'
