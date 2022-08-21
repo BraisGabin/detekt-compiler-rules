@@ -30,7 +30,7 @@ jobs:
     - name: Run tests
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: test publishToMavenLocal
+        arguments: test jar publishToMavenLocal
     - name: Commit
       run: |
         if git diff --quiet; then
@@ -48,14 +48,16 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         tags: true
     - name: Create Draft Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
+        files: |
+          build/libs/detekt-compiler-rules-${{ inputs.version }}.jar
         tag_name: ${{ inputs.version }}
-        release_name: v${{ inputs.version }}
+        name: v${{ inputs.version }}
         draft: true
         prerelease: false
+        fail_on_unmatched_files: true
+        generate_release_notes: true
     - name: Publish to maven central
       uses: gradle/gradle-build-action@v2
       with:
