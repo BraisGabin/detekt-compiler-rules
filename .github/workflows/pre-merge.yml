@@ -24,6 +24,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - name: Disable signing
+        # Needed because: https://github.com/vanniktech/gradle-maven-publish-plugin/issues/383
+        run: echo "RELEASE_SIGNING_ENABLED=false" >>gradle.properties
       - name: Check that the publish plugin works
         uses: gradle/gradle-build-action@v2
         with:

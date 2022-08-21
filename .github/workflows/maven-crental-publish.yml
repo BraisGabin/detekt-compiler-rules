@@ -1,0 +1,42 @@
+name: Publish to Maven Central
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Which version'
+        required: true
+        type: string
+
+env:
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
+  ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+  ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
+jobs:
+  publish:
+    name: Publish to Maven Cental
+    runs-on: ubuntu-latest
+    steps:
+    - name: Validate Input
+      run: |
+        echo "${{ inputs.version }}" | sed --quiet -E '/^[0-9]+\.[0-9]+\.[0-9]+(-RC[0-9]+)?$/!{q1}'
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Update version
+      run: |
+        sed -E -i 's/^VERSION_NAME=(.*)$/VERSION_NAME=${{ inputs.version }}/g' gradle.properties
+        sed -E -i 's/"com.braisgabin.detekt:kotlin-compiler-wrapper:[^"]+"/"com.braisgabin.detekt:kotlin-compiler-wrapper:${{ inputs.version }}"/g' README.md
+    - name: Run tests
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: test publishToMavenLocal
+    - name: Commit new version
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: Upadate version to ${{ inputs.version }}
+        default_author: user_info
+    - name: Publish to maven central
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: publish --no-daemon --no-parallel
