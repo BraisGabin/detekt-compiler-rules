@@ -31,11 +31,18 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: test publishToMavenLocal
-    - name: Commit new version
-      uses: EndBug/add-and-commit@v9
+    - name: Commit
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -am "Upadate version to ${{ inputs.version }}"
+        git tag "${{ inputs.version }}"
+    - name: Push
+      uses: ad-m/github-push-action@v0.6.0
       with:
-        message: Upadate version to ${{ inputs.version }}
-        default_author: user_info
+        branch: main
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tags: true
     - name: Publish to maven central
       uses: gradle/gradle-build-action@v2
       with:
