@@ -43,6 +43,15 @@ jobs:
         branch: main
         github_token: ${{ secrets.GITHUB_TOKEN }}
         tags: true
+    - name: Create Draft Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ inputs.version }}
+        release_name: v${{ inputs.version }}
+        draft: true
+        prerelease: false
     - name: Publish to maven central
       uses: gradle/gradle-build-action@v2
       with:
