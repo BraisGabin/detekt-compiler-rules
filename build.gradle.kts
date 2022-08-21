@@ -2,15 +2,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.10"
-    `maven-publish`
 }
 
-group = "com.braisgabin.detekt.compiler"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+buildscript {
+    dependencies {
+        classpath("com.vanniktech:gradle-maven-publish-plugin:0.21.0")
+    }
 }
+
+apply(plugin="com.vanniktech.maven.publish")
 
 dependencies {
     compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.21.0")
@@ -20,7 +20,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
 
@@ -28,12 +28,4 @@ tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     systemProperty("junit.jupiter.testinstance.lifecycle.default", "per_class")
     systemProperty("compile-snippet-tests", project.hasProperty("compile-test-snippets"))
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-        }
-    }
 }
