@@ -33,10 +33,14 @@ jobs:
         arguments: test publishToMavenLocal
     - name: Commit
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -am "Upadate version to ${{ inputs.version }}"
-        git tag "${{ inputs.version }}"
+        if git diff --quiet; then
+          echo Nothing to commit
+        else
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Upadate version to ${{ inputs.version }}"
+          git tag "${{ inputs.version }}"
+        fi
     - name: Push
       uses: ad-m/github-push-action@v0.6.0
       with:
