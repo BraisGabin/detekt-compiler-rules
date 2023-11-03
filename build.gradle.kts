@@ -13,7 +13,7 @@ buildscript {
 apply(plugin="com.vanniktech.maven.publish")
 
 dependencies {
-    compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.1")
+    compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.3")
 
     testImplementation("io.gitlab.arturbosch.detekt:detekt-test:1.23.1")
     testImplementation("io.kotest:kotest-assertions-core:5.8.0")
