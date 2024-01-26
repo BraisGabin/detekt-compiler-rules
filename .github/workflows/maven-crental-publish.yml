@@ -28,9 +28,9 @@ jobs:
         sed -E -i 's/^VERSION_NAME=(.*)$/VERSION_NAME=${{ inputs.version }}/g' gradle.properties
         sed -E -i 's/"com.braisgabin.detekt:kotlin-compiler-wrapper:[^"]+"/"com.braisgabin.detekt:kotlin-compiler-wrapper:${{ inputs.version }}"/g' README.md
     - name: Run tests
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: test jar publishToMavenLocal
+      uses: gradle/actions/setup-gradle@v3
+    - name: Check
+      run: ./gradlew build publishToMavenLocal
     - name: Commit
       run: |
         if git diff --quiet; then
@@ -58,7 +58,5 @@ jobs:
         prerelease: false
         fail_on_unmatched_files: true
         generate_release_notes: true
-    - name: Publish to maven central
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: publish --no-daemon --no-parallel -PRELEASE_SIGNING_ENABLED=true
+    - name: Publish
+      run: ./gradlew publish --no-daemon --no-parallel -PRELEASE_SIGNING_ENABLED=true
