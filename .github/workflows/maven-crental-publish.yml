@@ -22,7 +22,7 @@ jobs:
       run: |
         echo "${{ inputs.version }}" | sed --quiet -E '/^[0-9]+\.[0-9]+\.[0-9]+(-RC[0-9]+)?$/!{q1}'
     - name: Checkout Repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Update version
       run: |
         sed -E -i 's/^VERSION_NAME=(.*)$/VERSION_NAME=${{ inputs.version }}/g' gradle.properties
