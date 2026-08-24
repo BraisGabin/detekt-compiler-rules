@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 0.1.0 *()*
+- Remove support for detekt 1 and add it for detekt 2 (alpha6)
+- The rules `CompilerInfo` and `CompilerWarning` are replaced by `CompilerDiagnostics`. This rule lets you define reportOnSeverity so you can decide to report only warnings or also info.
+
 ## Version 0.0.4 *(2023-01-24)*
 - Support Java 8
 

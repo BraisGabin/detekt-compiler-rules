@@ -1,8 +1,6 @@
 compiler:
-  CompilerInfo:
-    active: false
-    ignoreDiagnostic: []
-  CompilerWarning:
+  active: true
+  CompilerDiagnostics:
     active: true
-    ignoreDiagnostic:
-      - 'OPT_IN_IS_NOT_ENABLED'
+    reportOnSeverity: 'warning'
+    ignoreDiagnostic: []
