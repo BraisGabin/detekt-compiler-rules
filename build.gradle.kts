@@ -1,14 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.21"
+    id("com.vanniktech.maven.publish") version "0.37.0"
 }
-
-buildscript {
-    dependencies {
-        classpath("com.vanniktech:gradle-maven-publish-plugin:0.34.0")
-    }
-}
-
-apply(plugin="com.vanniktech.maven.publish")
 
 dependencies {
     compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.8")
@@ -28,4 +21,36 @@ tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     systemProperty("junit.jupiter.testinstance.lifecycle.default", "per_class")
     systemProperty("compile-snippet-tests", project.hasProperty("compile-test-snippets"))
+}
+
+mavenPublishing {
+    publishToMavenCentral(false)
+
+    coordinates("com.braisgabin.detekt", "kotlin-compiler-wrapper", "0.0.4")
+
+    pom {
+        name.set("Detekt Compiler Rules")
+        description.set("Detekt rules to wrap the Kotlin compiler messages")
+        inceptionYear.set("2022")
+        url.set("https://github.com/BraisGabin/detekt-compiler-rules")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("BraisGabin")
+                name.set("Brais Gabín")
+                url.set("https://github.com/BraisGabin")
+            }
+        }
+        scm {
+            url.set("https://github.com/BraisGabin/detekt-compiler-rules")
+            connection.set("scm:git:git://github.com/BraisGabin/detekt-compiler-rules.git")
+            developerConnection.set("scm:git:ssh://git@github.com:BraisGabin/detekt-compiler-rules.git")
+        }
+    }
 }
