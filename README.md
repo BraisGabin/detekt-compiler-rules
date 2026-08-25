@@ -12,5 +12,9 @@ dependencies {
 }
 ```
 
+### Detekt 1 support
+
+If you want to use this plugin with detekt 1 use version `0.0.4`.
+
 [detekt]: https://detekt.dev/
 [kotlin]: https://kotlinlang.org/
