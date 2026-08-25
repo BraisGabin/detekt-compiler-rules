@@ -23,7 +23,7 @@ tasks.withType<Test>().configureEach {
 mavenPublishing {
     publishToMavenCentral(false)
 
-    coordinates("com.braisgabin.detekt", "kotlin-compiler-wrapper", "0.0.4")
+    coordinates("com.braisgabin.detekt", "kotlin-compiler-wrapper")
 
     pom {
         name.set("Detekt Compiler Rules")
