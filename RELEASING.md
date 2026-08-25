@@ -2,7 +2,7 @@
 
 1. Check that the changelog is updated.
 2. Run the [Publish to Maven Central][action] with the desired version.
-3. Visit [Sonatype Nexus]([https://oss.sonatype.org/](https://central.sonatype.com/publishing)) and promote the artifact.
+3. Visit [Sonatype Nexus](https://central.sonatype.com/publishing) and promote the artifact.
 4. Visit [Releases](https://github.com/BraisGabin/detekt-compiler-rules/releases) and promote the draft to an actual GitHub Release. 
 
 [action]: https://github.com/BraisGabin/detekt-compiler-rules/actions/workflows/maven-crental-publish.yml
