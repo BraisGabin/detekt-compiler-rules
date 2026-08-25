@@ -1,4 +1,3 @@
-# Detekt compiler rules
 
 This rule set reports [Kotlin][kotlin] compiler diagnostics as [detekt][detekt] findings.
 
