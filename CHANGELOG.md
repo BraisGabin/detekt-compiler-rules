@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.1.0 *()*
+## Version 0.1.0 *(2026-08-25)*
 - Remove support for detekt 1 and add it for detekt 2 (alpha6)
 - The rules `CompilerInfo` and `CompilerWarning` are replaced by `CompilerDiagnostics`. This rule lets you define reportOnSeverity so you can decide to report only warnings or also info.
 
