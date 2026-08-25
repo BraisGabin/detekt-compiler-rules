@@ -1,0 +1,15 @@
+[versions]
+detekt = "2.0.0-alpha.6"
+
+[libraries]
+detekt-api = { module = "dev.detekt:detekt-api", version.ref = "detekt" }
+detekt-test = { module = "dev.detekt:detekt-test", version.ref = "detekt" }
+detekt-test-junit = { module = "dev.detekt:detekt-test-junit", version.ref = "detekt" }
+kotest = { module = "io.kotest:kotest-assertions-core", version = "5.9.1" }
+junit = { module = "org.junit.jupiter:junit-jupiter", version = "5.14.4" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.4.10" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }
+tapmoc = { id = "com.gradleup.tapmoc", version = "0.4.2"}

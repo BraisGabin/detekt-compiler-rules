@@ -1,19 +1,16 @@
 package com.braisgabin.detekt.compiler
 
-import io.gitlab.arturbosch.detekt.api.Config
-import io.gitlab.arturbosch.detekt.api.RuleSet
-import io.gitlab.arturbosch.detekt.api.RuleSetProvider
+import dev.detekt.api.RuleSet
+import dev.detekt.api.RuleSetId
+import dev.detekt.api.RuleSetProvider
 
 class CompilerRuleSetProvider : RuleSetProvider {
-    override val ruleSetId: String = "compiler"
+    override val ruleSetId = RuleSetId("compiler")
 
-    override fun instance(config: Config): RuleSet {
-        return RuleSet(
-            ruleSetId,
-            listOf(
-                CompilerInfo(config),
-                CompilerWarning(config),
-            ),
+    override fun instance(): RuleSet = RuleSet(
+        ruleSetId,
+        listOf(
+            ::CompilerDiagnostics,
         )
-    }
+    )
 }

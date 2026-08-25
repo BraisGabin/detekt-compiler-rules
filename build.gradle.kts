@@ -1,20 +1,17 @@
 plugins {
-    kotlin("jvm") version "2.2.21"
-    id("com.vanniktech.maven.publish") version "0.37.0"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.tapmoc)
 }
 
 dependencies {
-    compileOnly("io.gitlab.arturbosch.detekt:detekt-api:1.23.8")
+    compileOnly(libs.detekt.api)
 
-    testImplementation("io.gitlab.arturbosch.detekt:detekt-test:1.23.8")
-    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
-    testImplementation(platform("org.junit:junit-bom:5.14.4"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-kotlin {
-    jvmToolchain(8)
+    testImplementation(libs.detekt.test)
+    testImplementation(libs.detekt.test.junit)
+    testImplementation(libs.kotest)
+    testImplementation(libs.junit)
+    testRuntimeOnly(libs.junit.launcher)
 }
 
 tasks.withType<Test>().configureEach {
@@ -53,4 +50,8 @@ mavenPublishing {
             developerConnection.set("scm:git:ssh://git@github.com:BraisGabin/detekt-compiler-rules.git")
         }
     }
+}
+
+tapmoc {
+    java(8)
 }
