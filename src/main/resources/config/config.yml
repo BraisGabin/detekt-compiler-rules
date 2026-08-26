@@ -2,5 +2,7 @@ compiler:
   active: true
   CompilerDiagnostics:
     active: true
-    reportOnSeverity: 'warning'
-    ignoreDiagnostic: []
+    reportSeverities:
+      - 'warning'
+    ignoreDiagnostic:
+      - 'REDUNDANT_VISIBILITY_MODIFIER'

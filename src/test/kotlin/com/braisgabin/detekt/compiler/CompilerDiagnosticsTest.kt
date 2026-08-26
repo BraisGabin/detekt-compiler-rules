@@ -33,7 +33,7 @@ internal class CompilerDiagnosticsTest(private val env: KotlinEnvironmentContain
             
             fun b() { a() }
         """
-        val findings = CompilerDiagnostics(TestConfig("reportOnSeverity" to "warning")).lintWithContext(env, code)
+        val findings = CompilerDiagnostics(TestConfig("reportSeverities" to listOf("warning"))).lintWithContext(env, code)
         findings shouldHaveSize 1
         findings[0].message shouldBeEqualComparingTo "Kotlin compiler warning: DEPRECATION"
     }
@@ -46,7 +46,7 @@ internal class CompilerDiagnosticsTest(private val env: KotlinEnvironmentContain
             
             fun b() { a() }
         """
-        val findings = CompilerDiagnostics(TestConfig("reportOnSeverity" to "error")).lintWithContext(env, code)
+        val findings = CompilerDiagnostics(TestConfig("reportSeverities" to listOf("error"))).lintWithContext(env, code)
         findings shouldHaveSize 0
     }
 

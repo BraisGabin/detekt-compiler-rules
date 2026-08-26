@@ -10,28 +10,22 @@ import org.jetbrains.kotlin.analysis.api.KaExperimentalApi
 import org.jetbrains.kotlin.analysis.api.analyze
 import org.jetbrains.kotlin.analysis.api.components.KaDiagnosticCheckerFilter
 import org.jetbrains.kotlin.analysis.api.diagnostics.KaSeverity
-import org.jetbrains.kotlin.psi.KtElement
+import org.jetbrains.kotlin.psi.KtFile
 
 class CompilerDiagnostics(
     config: Config,
 ) : Rule(config, "Reports the info raised by the compiler"),
     RequiresAnalysisApi {
 
-    private val reportOnSeverity: KaSeverity by config("warning") {
-        when (it) {
-            "info" -> KaSeverity.INFO
-            "warning" -> KaSeverity.WARNING
-            "error" -> KaSeverity.ERROR
-            else -> error("Unknown severity: $it. The valid values are info, warning and error.")
-        }
-    }
-    private val ignoreDiagnostic: Set<String> by config(emptyList(), List<String>::toSet)
+    private val reportSeverities: Set<KaSeverity> by config(listOf("warning")) { it.map(String::toSeverity).toSet() }
+
+    private val ignoreDiagnostic: Set<String> by config(listOf("REDUNDANT_VISIBILITY_MODIFIER"), List<String>::toSet)
 
     @OptIn(KaExperimentalApi::class)
-    override fun visitKtElement(element: KtElement) {
-        analyze(element) {
-            element.directDiagnostics(KaDiagnosticCheckerFilter.EXTENDED_AND_COMMON_CHECKERS)
-                .filter { it.severity.ordinal <= reportOnSeverity.ordinal }
+    override fun visit(root: KtFile) {
+        analyze(root) {
+            root.diagnostics(KaDiagnosticCheckerFilter.EXTENDED_AND_COMMON_CHECKERS)
+                .filter { it.severity in reportSeverities }
                 .filter { it.factoryName !in ignoreDiagnostic }
                 .forEach { diagnostic ->
                     report(
@@ -42,6 +36,12 @@ class CompilerDiagnostics(
                     )
                 }
         }
-        super.visitElement(element)
     }
+}
+
+private fun String.toSeverity() = when (this) {
+    "info" -> KaSeverity.INFO
+    "warning" -> KaSeverity.WARNING
+    "error" -> KaSeverity.ERROR
+    else -> error("Unknown severity: $this. The valid values are \"info\", \"warning\" and \"error\".")
 }
