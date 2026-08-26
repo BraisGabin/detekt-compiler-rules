@@ -8,7 +8,7 @@ Add this to your `build.gradle`:
 
 ```kotlin
 dependencies {
-  detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.1.0")
+  detektPlugins("com.braisgabin.detekt:kotlin-compiler-wrapper:0.1.1")
 }
 ```
 
