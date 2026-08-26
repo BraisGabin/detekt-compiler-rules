@@ -1,4 +1,4 @@
-# Releaising
+# Releasing
 
 1. Check that the changelog is updated.
 2. Go to [Branch settings](https://github.com/BraisGabin/detekt-compiler-rules/settings/branches) and disable the branch protection for `main`.
