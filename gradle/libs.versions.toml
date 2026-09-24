@@ -10,6 +10,6 @@ junit = { module = "org.junit.jupiter:junit-jupiter", version = "5.14.4" }
 junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.4.10" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.4.20" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.37.0" }
 tapmoc = { id = "com.gradleup.tapmoc", version = "0.4.2"}
